@@ -1,15 +1,18 @@
 import { Router } from 'express';
-import * as ProjectController from '../controllers/project.controller';
+import * as ctrl from '../controllers/project.controller';
+import { tokenValidation } from '../middlewares/verifyToken';
+
 export const ProjectRouter = Router();
 
-ProjectRouter.get('/getSections', ProjectController.getSections);
-ProjectRouter.post('/getSectionData', ProjectController.getSectionData);
-ProjectRouter.post('/addSection', ProjectController.addSections);
-ProjectRouter.post('/getProject', ProjectController.getProject);
-ProjectRouter.post('/addProject', ProjectController.addProject);
-ProjectRouter.patch('/updateProject', ProjectController.updateProject);
+ProjectRouter.get('/getSections', ctrl.getSections);
+ProjectRouter.post('/getSectionData', ctrl.getSectionData);
+ProjectRouter.post('/addSection', tokenValidation, ctrl.addSections);
+ProjectRouter.post('/getProject', ctrl.getProject);
+ProjectRouter.post('/addProject', tokenValidation, ctrl.addProject);
+ProjectRouter.patch('/updateProject', tokenValidation, ctrl.updateProject);
 ProjectRouter.delete(
 	'/deleteProject/:sectionID/:projectID',
-	ProjectController.deleteProjectFromSection
+	tokenValidation,
+	ctrl.deleteProjectFromSection
 );
-ProjectRouter.post('/deleteImage', ProjectController.deleteImgFromProject);
+ProjectRouter.post('/deleteImage', tokenValidation, ctrl.deleteImgFromProject);

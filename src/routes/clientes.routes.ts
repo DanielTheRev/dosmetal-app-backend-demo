@@ -1,9 +1,11 @@
 import { Router } from 'express';
-import * as controller from '../controllers/clientes.controllers';
+import * as ctrl from '../controllers/clientes.controllers';
+import { tokenValidation } from '../middlewares/verifyToken';
 
 export const ClientRouter = Router();
 
-ClientRouter.get('/all-clients', controller.getAllClients);
-ClientRouter.post('/add-new-client', controller.addNewClient);
-ClientRouter.patch('/edit-client', controller.editClient);
-ClientRouter.delete('/delete-client/:_id', controller.deleteClient);
+ClientRouter.use(tokenValidation);
+ClientRouter.get('/all-clients', ctrl.getAllClients);
+ClientRouter.post('/add-new-client', ctrl.addNewClient);
+ClientRouter.patch('/edit-client', ctrl.editClient);
+ClientRouter.delete('/delete-client/:_id', ctrl.deleteClient);

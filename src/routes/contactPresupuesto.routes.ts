@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import * as Controller from '../controllers/contactPresupuesto.controller';
+import * as ctrl from '../controllers/contactPresupuesto.controller';
+import { tokenValidation } from '../middlewares/verifyToken';
+
 export const ContactPresupuestoRouter = Router();
 
 ContactPresupuestoRouter.get(
 	'/getAllContactPresupuesto',
-	Controller.getAllContactPrespuesto
+	tokenValidation,
+	ctrl.getAllContactPrespuesto
 );
-ContactPresupuestoRouter.post(
-	'/newContactPrespuesto',
-	Controller.createContactPresupuesto
-);
+ContactPresupuestoRouter.post('/newContactPrespuesto', ctrl.createContactPresupuesto);

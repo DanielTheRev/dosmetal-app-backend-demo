@@ -1,9 +1,11 @@
 import { Router } from 'express';
 
-import * as RetirosController from '../controllers/retiros.controllers';
+import * as ctrl from '../controllers/retiros.controllers';
+import { tokenValidation } from '../middlewares/verifyToken';
 
 export const RetirosRoutes = Router();
 
-RetirosRoutes.get('/getMonths', RetirosController.getMonths);
-RetirosRoutes.get('/getToday', RetirosController.getToday);
-RetirosRoutes.post('/especificDay', RetirosController.getEspecificDayRetiros);
+RetirosRoutes.use(tokenValidation);
+RetirosRoutes.get('/getMonths', ctrl.getMonths);
+RetirosRoutes.get('/getToday', ctrl.getToday);
+RetirosRoutes.post('/especificDay', ctrl.getEspecificDayRetiros);

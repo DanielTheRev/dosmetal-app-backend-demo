@@ -1,16 +1,15 @@
 import { Router } from 'express';
-import {
-	addHomeBanner,
-	editHomeBannerDescription,
-	editHomeBannerImage,
-	getHomeBanner,
-	getHomeBanners
-} from '../controllers/home-banner.controller';
+import * as ctrl from '../controllers/home-banner.controller';
+import { tokenValidation } from '../middlewares/verifyToken';
 
 export const HomeBannerRouter = Router();
 
-HomeBannerRouter.get('/getHomeBanners', getHomeBanners);
-HomeBannerRouter.post('/getHomeBanner', getHomeBanner);
-HomeBannerRouter.post('/addHomeBanner', addHomeBanner);
-HomeBannerRouter.patch('/editHomeBannerDescription', editHomeBannerDescription);
-HomeBannerRouter.patch('/editHomeBannerImg', editHomeBannerImage);
+HomeBannerRouter.get('/getHomeBanners', ctrl.getHomeBanners);
+HomeBannerRouter.post('/getHomeBanner', ctrl.getHomeBanner);
+HomeBannerRouter.post('/addHomeBanner', tokenValidation, ctrl.addHomeBanner);
+HomeBannerRouter.patch(
+	'/editHomeBannerDescription',
+	tokenValidation,
+	ctrl.editHomeBannerDescription
+);
+HomeBannerRouter.patch('/editHomeBannerImg', tokenValidation, ctrl.editHomeBannerImage);
